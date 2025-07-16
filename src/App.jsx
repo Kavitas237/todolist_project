@@ -168,19 +168,19 @@ export default function Apps() {
   const [deadlockDateTime,setdeadlockDateTime]=useState("");
   const [endDateTime, setEndDateTime] = useState("");
   const [showFilteredList, setShowFilteredList] = useState(false);
-  const newDateTime = new Date().toLocaleString();
+  //const newDateTime = new Date().toLocaleString();
   const todayISOString = new Date().toISOString().slice(0, 16);
 
 //console.log(newDateTime);
-  const addlist = (e) => {
-    if (e.key === "Enter" && searchItem.trim()!== ""  && deadlockDateTime) {
+  const addlist = () => {
+    if ( searchItem.trim()!== ""  && deadlockDateTime) {
       //const deadlock = deadlockDateTime ? new Date(deadlockDateTime).getTime() : null;
       setStoresearch(
         storesearch.concat({
           id: Date.now(),
           text: searchItem.trim(),
           completed: false,
-          updatedAt: deadlockDateTime || newDateTime,
+          updatedAt: deadlockDateTime ,
           //createdAt: new Date().toISOString(), // store ISO date for filtering
         })
       );
@@ -201,7 +201,6 @@ export default function Apps() {
   const applyDateFilter = () => {
     setShowFilteredList(true);
   };
-  
 
   const filteredList = storesearch.filter((store) => {
     if (!showFilteredList) return true; // If submit not clicked, show full list
@@ -229,11 +228,11 @@ export default function Apps() {
 
   return (
     <div className="container h-screen w-screen flex items-center justify-center">
-      <div className="bg-white p-14 shadow-lg w-md">
+      <div className="bg-white p-14 shadow-lg ">
         <h1 className="text-3xl font-bold text-center text-indigo-600 mb-4">
           Todos
         </h1>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <Search
             searchItem={searchItem}
             setSearchItem={setSearchItem}
@@ -247,7 +246,7 @@ export default function Apps() {
               const dateValue=e.target.value;
               setdeadlockDateTime(dateValue);
             }}
-            className="border p-2 rounded w-full mb-2"
+            className="border p-2 rounded w-full"
           />  
           {/* <input
             type="datetime-local"
@@ -273,7 +272,16 @@ export default function Apps() {
             className="border p-2 rounded w-full mb-2"
           />  */}
 
-        </div>
+       
+        <button onClick={addlist}
+            className="bg-red-500 text-white py-2 px-4 rounded align-content: center"
+           // disabled={!startDateTime || !endDateTime}
+          >
+            Submit
+        </button>
+         </div>
+        <br></br>
+        <br></br>
 
         {/* Date-Time Filter Inputs */}
         <div className="mb-4 ">
